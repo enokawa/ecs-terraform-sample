@@ -4,8 +4,7 @@ Terraform sample code to create Amazon ECS on AWS Fargate.
 
 ## Prerequisite
 
-- [tfenv](https://github.com/tfutils/tfenv)
-- [AWS CLI](https://aws.amazon.com/cli/)
+- [Terraform](https://www.terraform.io/)
 
 ## Usage
 
@@ -22,28 +21,20 @@ Modify S3 bucket settings for remote state on `terraform.tf`.
 
 ```hcl
 terraform {
-  required_version = "0.12.26"
+  required_version = "1.1.6"
   backend "s3" {
-    bucket = "my-awesome-app-tfstate" # Enter your bucket name
+    bucket = "your-tfstate-bucket-name" # Enter your bucket name
     key    = "us-east-1/dev/terraform.tfstate"
     region = "us-east-1"
   }
-}
+.
+.
+.
 ```
 
-Modify your source ip addresses for [cluster endpoint access control](https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html) on `variables.tf`.
-
-```hcl
-variable "eks_public_access_cidrs" {
-  type    = list
-  default = ["54.XX.XX.XX/32"] # Enter your source ip
-}
-```
-
-Install Terraform binary use tfenv and execute `terraform init`.
+Install Terraform binary and execute `terraform init`.
 
 ```sh
-$ tfenv install
 $ terraform init
 ```
 
@@ -54,21 +45,8 @@ $ terraform plan
 $ terraform apply
 ```
 
-## Update kubeconfig
-
-```sh
-$ aws eks update-kubeconfig --name dev-app
-```
-
-## Apply aws-auth configMap
-
-See document bellow:
-
-[Managing users or IAM roles for your cluster - Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html)
-
 ## Destroy
 
 ```sh
 $ terraform destroy
 ```
-
