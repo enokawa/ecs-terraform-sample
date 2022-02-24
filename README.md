@@ -8,13 +8,12 @@ Terraform sample code to create Amazon ECS on AWS Fargate.
 
 ## Usage
 
-Set environment variable `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_DEFAULT_REGION`.
+Set environment variable `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`.
 
 ```sh
 $ direnv edit . # direnv is not required
 export AWS_ACCESS_KEY_ID=AKIAXXXXXXXXXXXXXXXXXX
 export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
-export AWS_REGION=us-east-1
 ```
 
 Modify S3 bucket settings for remote state on `terraform.tf`.
