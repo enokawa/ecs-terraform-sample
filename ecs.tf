@@ -56,8 +56,8 @@ resource "aws_ecs_task_definition" "app" {
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          awslogs-group = "/ecs/${var.stage}-app"
-          awslogs-region = var.region
+          awslogs-group         = "/ecs/${var.stage}-app"
+          awslogs-region        = var.region
           awslogs-stream-prefix = "ecs"
         }
       }

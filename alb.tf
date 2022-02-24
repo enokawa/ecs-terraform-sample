@@ -3,14 +3,14 @@ resource "aws_lb" "app" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
-  subnets            = [
+  subnets = [
     aws_subnet.public_a.id,
     aws_subnet.public_b.id,
     aws_subnet.public_c.id
   ]
 
   enable_deletion_protection = false
-  
+
   tags = {
     Name = "${var.stage}-app"
   }
@@ -32,11 +32,11 @@ resource "aws_lb_listener" "app_http" {
 }
 
 resource "aws_lb_target_group" "app_tg" {
-  name        = "${var.stage}-app-lb-tg"
-  port        = 80
-  protocol    = "HTTP"
-  target_type = "ip"
-  vpc_id      = aws_vpc.vpc.id
+  name                 = "${var.stage}-app-lb-tg"
+  port                 = 80
+  protocol             = "HTTP"
+  target_type          = "ip"
+  vpc_id               = aws_vpc.vpc.id
   deregistration_delay = 60
 
   health_check {
