@@ -9,6 +9,31 @@ data "aws_iam_policy_document" "ecs_task_role_policy" {
   }
 }
 
+resource "aws_iam_policy" "ecs_exec_policy" {
+  name        = "${var.stage}-ecs-exec-policy"
+  path        = "/"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "ssmmessages:CreateControlChannel",
+          "ssmmessages:CreateDataChannel",
+          "ssmmessages:OpenControlChannel",
+          "ssmmessages:OpenDataChannel"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+
+  tags = {
+    Name = "${var.stage}-ecs-exec-policy"
+  }
+}
+
 resource "aws_iam_role" "ecs_task_role" {
   name               = "${var.stage}-ecs-task-role"
   path               = "/"
@@ -17,6 +42,11 @@ resource "aws_iam_role" "ecs_task_role" {
   tags = {
     Name = "${var.stage}-ecs-task-role"
   }
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_exec_policy_attach" {
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = aws_iam_policy.ecs_exec_policy.arn
 }
 
 data "aws_iam_policy_document" "ecs_task_execution_role_policy" {

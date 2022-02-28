@@ -55,6 +55,9 @@ resource "aws_ecs_task_definition" "app" {
       name      = "nginx"
       image     = "public.ecr.aws/nginx/nginx:latest"
       essential = true
+      linuxParameters = {
+        "initProcessEnabled" = true
+      }
       portMappings = [
         {
           containerPort = 80
